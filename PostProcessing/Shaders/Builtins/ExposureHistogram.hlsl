@@ -74,7 +74,9 @@ float GetAverageLuminance(StructuredBuffer<uint> buffer, float4 params, float ma
     uint i;
     float totalSum = 0.0;
 
-    UNITY_UNROLL
+#if !UNITY_SWITCH
+	UNITY_UNROLL
+#endif
     for (i = 0; i < HISTOGRAM_BINS; i++)
         totalSum += GetBinValue(buffer, i, maxHistogramValue);
 
@@ -84,7 +86,9 @@ float GetAverageLuminance(StructuredBuffer<uint> buffer, float4 params, float ma
     // zw: fractions
     float4 filter = float4(0.0, 0.0, totalSum * params.xy);
 
-    UNITY_UNROLL
+#if !UNITY_SWITCH
+	UNITY_UNROLL
+#endif
     for (i = 0; i < HISTOGRAM_BINS; i++)
         FilterLuminance(buffer, i, maxHistogramValue, scaleOffset, filter);
 
